@@ -6,10 +6,10 @@ class Barchart extends React.Component {
     super(props);
     this.state = {
       data: [
-        { index: 1, label: "Engineering", val: 7 },
-        { index: 2, label: "Doctor", val: 11 },
-        { index: 3, label: "Pilots", val: 8 },
-        { index: 4, label: "Consultant", val: 1 },
+        { index: 1, name: "Engineering", val: 7 },
+        { index: 2, name: "Doctor", val: 11 },
+        { index: 3, name: "Pilots", val: 8 },
+        { index: 4, name: "Consultant", val: 1 },
       ],
     };
   }
@@ -25,7 +25,7 @@ class Barchart extends React.Component {
     ];
 
     const legends = this.state.data.map((datum) => {
-      return { name: datum.label, symbol: { fill: chartPalette[datum.index] } };
+      return { name: datum.name, symbol: { fill: chartPalette[datum.index] } };
     });
 
     return (
@@ -35,7 +35,7 @@ class Barchart extends React.Component {
         <VictoryBar
           data={this.state.data}
           alignment="middle"
-          x="label"
+          x="name"
           y="val"
           labels={({ datum }) => {
             return datum.val;
