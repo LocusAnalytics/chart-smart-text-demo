@@ -49,6 +49,9 @@ class Linechart extends React.Component {
   render() {
     const dim = { h: 200, w: 450, legend_w: 80, legend_h: 50 };
     const chartPalette = ["orange", "orange", "red", "teal", "turquoise"];
+    const legends = this.state.data.map((datum) => {
+      return { name: datum.label, symbol: { fill: chartPalette[datum.index] } };
+    });
 
     return (
       <VictoryChart height={dim.h} width={dim.w}>
@@ -65,6 +68,16 @@ class Linechart extends React.Component {
             />
           );
         })}
+        <VictoryLegend
+          x={dim.w - dim.legend_w}
+          y={5}
+          width={dim.legend_w}
+          height={dim.legend_h}
+          orientation="vertical"
+          rowGutter={2}
+          style={{ border: { stroke: null }, title: { fontSize: 5 } }}
+          data={legends}
+        />
       </VictoryChart>
     );
   }
