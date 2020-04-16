@@ -56,7 +56,7 @@ class Barchart extends React.Component {
           height={dim.legend_h}
           orientation="vertical"
           rowGutter={2}
-          style={{ border: { stroke: null }, title: { fontSize: 5 } }}
+          style={{ border: { stroke: null }, labels: { fontSize: 10 } }}
           data={legends}
         />
       </VictoryChart>
