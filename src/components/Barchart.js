@@ -1,21 +1,21 @@
 import React from "react";
-import { VictoryBar, VictoryChart, VictoryAxis } from "victory";
+import { VictoryBar, VictoryChart, VictoryAxis, VictoryLegend } from "victory";
 
 class Barchart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      markers: [
-        { fm: "dummy", estab: 1 },
-        { fm: "Engineering", estab: 7 },
-        { fm: "Doctor", estab: 15 },
-        { fm: "Pilots", estab: 10 },
-        { fm: "Consultant", estab: 1 },
+      data: [
+        { index: 1, label: "Engineering", value: 7 },
+        { index: 2, label: "Doctor", value: 15 },
+        { index: 3, label: "Pilots", value: 10 },
+        { index: 4, label: "Consultant", value: 1 },
       ],
     };
   }
 
   render() {
+    const dim = { h: 200, w: 450, legend_w: 80, legend_h: 50 };
     const chartPalette = [
       "#093959",
       "#0f3883",
@@ -24,24 +24,38 @@ class Barchart extends React.Component {
       "#7a99b8",
     ];
 
+    const legends = this.state.data.map((datum) => {
+      return { name: datum.label, symbol: { fill: chartPalette[datum.index] } };
+    });
+
     return (
-      <VictoryChart height={250} domainPadding={{ x: [15, 0] }}>
-        <VictoryAxis tickFormat={() => ""} />
+      <VictoryChart height={dim.h} width={dim.w} domainPadding={{ x: [15, 0] }}>
         <VictoryAxis dependentAxis />
+        <VictoryAxis tickFormat={() => ""} />
         <VictoryBar
-          data={this.state.markers}
-          x="name"
-          y="estab"
+          data={this.state.data}
+          alignment="middle"
+          x="index"
+          y="value"
           horizontal
-          barWidth={16}
-          labels={({ datum }) => datum.fm}
+          labels={({ datum }) => datum.value}
           style={{
             data: {
               fill: ({ datum }) => {
-                return chartPalette[datum._x];
+                return chartPalette[datum.index];
               },
             },
           }}
+        />
+        <VictoryLegend
+          x={dim.w - dim.legend_w}
+          y={5}
+          width={dim.legend_w}
+          height={dim.legend_h}
+          orientation="vertical"
+          rowGutter={2}
+          style={{ border: { stroke: null }, title: { fontSize: 5 } }}
+          data={legends}
         />
       </VictoryChart>
     );

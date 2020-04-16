@@ -6,7 +6,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">Smart Text Prototype Demo</header>
-      <Barchart />
+      <div className="App-body">
+        <Barchart />
+      </div>
     </div>
   );
 }
