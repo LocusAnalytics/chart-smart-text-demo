@@ -6,10 +6,10 @@ class Barchart extends React.Component {
     super(props);
     this.state = {
       data: [
-        { index: 1, label: "Engineering", value: 7 },
-        { index: 2, label: "Doctor", value: 15 },
-        { index: 3, label: "Pilots", value: 10 },
-        { index: 4, label: "Consultant", value: 1 },
+        { index: 1, label: "Engineering", val: 7 },
+        { index: 2, label: "Doctor", val: 11 },
+        { index: 3, label: "Pilots", val: 8 },
+        { index: 4, label: "Consultant", val: 1 },
       ],
     };
   }
@@ -35,10 +35,12 @@ class Barchart extends React.Component {
         <VictoryBar
           data={this.state.data}
           alignment="middle"
-          x="index"
-          y="value"
+          x="label"
+          y="val"
+          labels={({ datum }) => {
+            return datum.val;
+          }}
           horizontal
-          labels={({ datum }) => datum.value}
           style={{
             data: {
               fill: ({ datum }) => {
