@@ -6,9 +6,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">Smart Text Prototype Demo</header>
-      <body>
-        <Chart />
-      </body>
+      <Chart />
     </div>
   );
 }
@@ -20,6 +18,7 @@ class Chart extends React.Component {
     super(props);
     this.state = {
       markers: [
+        { fm: "dummy", estab: 1 },
         { fm: "Engineering", estab: 7 },
         { fm: "Doctor", estab: 15 },
         { fm: "Pilots", estab: 10 },
@@ -38,7 +37,7 @@ class Chart extends React.Component {
     ];
 
     return (
-      <VictoryChart height={200} domainPadding={{ x: 15 }}>
+      <VictoryChart height={250} domainPadding={{ x: [15, 0] }}>
         <VictoryAxis tickFormat={() => ""} />
         <VictoryAxis dependentAxis />
         <VictoryBar
@@ -47,10 +46,12 @@ class Chart extends React.Component {
           y="estab"
           horizontal
           barWidth={16}
-          labels={({ datum }) => datum.estab}
+          labels={({ datum }) => datum.fm}
           style={{
             data: {
-              fill: ({ datum }) => chartPalette[datum.index],
+              fill: ({ datum }) => {
+                return chartPalette[datum._x];
+              },
             },
           }}
         />
