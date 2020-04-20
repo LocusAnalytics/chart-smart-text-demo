@@ -8,7 +8,9 @@ class StateSlider extends React.Component {
   };
 
   render() {
-    return <Slider value={this.props.value} onChange={this.handleChange} />;
+    return (
+      <Slider value={this.props.value} onChange={this.handleChange} max={30} />
+    );
   }
 }
 
