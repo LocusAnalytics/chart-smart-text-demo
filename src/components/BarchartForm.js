@@ -30,7 +30,7 @@ class BarchartForm extends React.Component {
           Show controls{" "}
           <Switch checked={this.state.open} onChange={this.toggleOpen} />
         </div>
-        <Collapse in={this.state.open} collapsedHeight="5px">
+        <Collapse in={this.state.open}>
           <form className="form barchart-form">
             {this.props.data.map((datum) => {
               return (
