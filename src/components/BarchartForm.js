@@ -28,7 +28,11 @@ class BarchartForm extends React.Component {
         <div className="barchart-collapse-control">
           {" "}
           Show controls{" "}
-          <Switch checked={this.state.open} onChange={this.toggleOpen} />
+          <Switch
+            checked={this.state.open}
+            onChange={this.toggleOpen}
+            size="small"
+          />
         </div>
         <Collapse in={this.state.open}>
           <form className="form barchart-form">
