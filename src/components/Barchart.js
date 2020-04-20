@@ -1,7 +1,7 @@
 import React from "react";
 import { VictoryBar, VictoryChart, VictoryAxis, VictoryLegend } from "victory";
-import BarchartForm from "./BarchartForm.js";
-
+import BarchartForm from "./BarchartForm";
+import Text from "./Text";
 class Barchart extends React.Component {
   constructor(props) {
     super(props);
@@ -80,6 +80,7 @@ class Barchart extends React.Component {
           />
         </VictoryChart>
         <BarchartForm data={this.state.data} updateData={this.updateData} />
+        <Text />
       </div>
     );
   }
