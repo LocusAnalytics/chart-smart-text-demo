@@ -9,10 +9,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(10px + 3vmin);
   color: white;
 }
 
 .App-body {
   margin: 0vmin 25vmin 0vmin 5vmin;
+}
+
+.form-item-name {
+  font-size: calc(5px + 2vmin);
 }

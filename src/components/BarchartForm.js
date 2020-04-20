@@ -1,5 +1,6 @@
 import React from "react";
 import StateSlider from "./Slider.js";
+import "../App.css";
 
 class BarchartForm extends React.Component {
   handleChange = (sliderIndex, newSliderValue) => {
@@ -8,10 +9,10 @@ class BarchartForm extends React.Component {
 
   render() {
     return (
-      <form>
+      <form className="form barchart-form">
         {this.props.data.map((datum) => {
           return (
-            <div key={datum.index}>
+            <div className="form-item-name" key={datum.index}>
               {datum.name}:{" "}
               <StateSlider
                 key={datum.index}
