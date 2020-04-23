@@ -1,6 +1,7 @@
 import React from "react";
 import Collapse from "@material-ui/core/Collapse";
 import Switch from "@material-ui/core/Switch";
+import Button from "@material-ui/core/Button";
 import StateTextfield from "./TextField";
 import "../App.css";
 
@@ -35,6 +36,13 @@ class LinechartForm extends React.Component {
           />
         </div>
         <Collapse in={this.state.open}>
+          <Button
+            className="button add-year-button"
+            variant="outlined"
+            onClick={this.props.addYear}
+          >
+            Add year
+          </Button>
           {this.props.data.map((datum) => {
             return (
               <div className="form-item-name" key={datum.index}>

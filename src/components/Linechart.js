@@ -51,6 +51,7 @@ class Linechart extends React.Component {
       ],
     };
     this.updateData = this.updateData.bind(this);
+    this.addYear = this.addYear.bind(this);
   }
 
   updateData(index, newSeries) {
@@ -61,6 +62,19 @@ class Linechart extends React.Component {
       } else {
         return datum;
       }
+    });
+    this.setState({ data: newData });
+  }
+
+  addYear() {
+    let oldData = this.state.data;
+    let oldYearMax = Math.max(...oldData[0].series.map((item) => item.x));
+    let newData = oldData.map((datum) => {
+      return {
+        index: datum.index,
+        label: datum.label,
+        series: [...datum.series, { x: oldYearMax + 1, y: 0 }],
+      };
     });
     this.setState({ data: newData });
   }
@@ -101,7 +115,11 @@ class Linechart extends React.Component {
             data={legends}
           />
         </VictoryChart>
-        <LinechartForm data={this.state.data} updateData={this.updateData} />
+        <LinechartForm
+          data={this.state.data}
+          updateData={this.updateData}
+          addYear={this.addYear}
+        />
         <Text />
       </div>
     );
