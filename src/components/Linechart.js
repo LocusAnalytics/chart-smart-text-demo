@@ -1,4 +1,5 @@
 import React from "react";
+import LinechartForm from "./LinechartForm";
 import { VictoryLine, VictoryChart, VictoryAxis, VictoryLegend } from "victory";
 
 class Linechart extends React.Component {
@@ -46,6 +47,18 @@ class Linechart extends React.Component {
     };
   }
 
+  updateData(index, newVal) {
+    let oldData = this.state.data;
+    let newData = oldData.map((datum) => {
+      if (datum.index === index) {
+        return { ...datum, val: newVal };
+      } else {
+        return datum;
+      }
+    });
+    this.setState({ data: newData });
+  }
+
   render() {
     const dim = { h: 200, w: 450, legend_w: 80, legend_h: 50 };
     const chartPalette = ["orange", "orange", "red", "teal", "turquoise"];
@@ -54,31 +67,34 @@ class Linechart extends React.Component {
     });
 
     return (
-      <VictoryChart height={dim.h} width={dim.w}>
-        <VictoryAxis tickValues={[2005, 2006, 2007]} />
-        <VictoryAxis dependentAxis />
-        {this.state.data.map((datum) => {
-          return (
-            <VictoryLine
-              key={datum.index}
-              style={{
-                data: { stroke: chartPalette[datum.index] },
-              }}
-              data={datum.series}
-            />
-          );
-        })}
-        <VictoryLegend
-          x={dim.w - dim.legend_w}
-          y={5}
-          width={dim.legend_w}
-          height={dim.legend_h}
-          orientation="vertical"
-          rowGutter={2}
-          style={{ border: { stroke: null }, labels: { fontSize: 10 } }}
-          data={legends}
-        />
-      </VictoryChart>
+      <div>
+        <VictoryChart height={dim.h} width={dim.w}>
+          <VictoryAxis tickValues={[2005, 2006, 2007]} />
+          <VictoryAxis dependentAxis />
+          {this.state.data.map((datum) => {
+            return (
+              <VictoryLine
+                key={datum.index}
+                style={{
+                  data: { stroke: chartPalette[datum.index] },
+                }}
+                data={datum.series}
+              />
+            );
+          })}
+          <VictoryLegend
+            x={dim.w - dim.legend_w}
+            y={5}
+            width={dim.legend_w}
+            height={dim.legend_h}
+            orientation="vertical"
+            rowGutter={2}
+            style={{ border: { stroke: null }, labels: { fontSize: 10 } }}
+            data={legends}
+          />
+        </VictoryChart>
+        <LinechartForm data={this.state.data} updateData={this.updateData} />
+      </div>
     );
   }
 }
