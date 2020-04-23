@@ -1,7 +1,7 @@
 import React from "react";
 import Collapse from "@material-ui/core/Collapse";
 import Switch from "@material-ui/core/Switch";
-import TextField from "@material-ui/core/TextField";
+import StateTextfield from "./TextField";
 import "../App.css";
 
 class LinechartForm extends React.Component {
@@ -16,6 +16,10 @@ class LinechartForm extends React.Component {
   toggleOpen = () => {
     let oldState = this.state.open;
     this.setState({ open: !oldState });
+  };
+
+  handleChange = (index, value) => {
+    console.log(index, value);
   };
 
   render() {
@@ -35,7 +39,12 @@ class LinechartForm extends React.Component {
             return (
               <div className="form-item-name" key={datum.index}>
                 {datum.label}:{" "}
-                <TextField value={datum.series.map((year) => year.y)} />
+                <StateTextfield
+                  key={datum.index}
+                  index={datum.index}
+                  value={datum.series.map((year) => year.y)}
+                  handleChange={this.handleChange}
+                />
               </div>
             );
           })}
