@@ -45,13 +45,14 @@ class Linechart extends React.Component {
         },
       ],
     };
+    this.updateData = this.updateData.bind(this);
   }
 
-  updateData(index, newVal) {
+  updateData(index, newSeries) {
     let oldData = this.state.data;
     let newData = oldData.map((datum) => {
       if (datum.index === index) {
-        return { ...datum, val: newVal };
+        return { ...datum, series: newSeries };
       } else {
         return datum;
       }

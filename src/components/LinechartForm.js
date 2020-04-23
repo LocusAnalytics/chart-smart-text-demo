@@ -18,8 +18,8 @@ class LinechartForm extends React.Component {
     this.setState({ open: !oldState });
   };
 
-  handleChange = (index, value) => {
-    console.log(index, value);
+  handleChange = (index, newSeries) => {
+    this.props.updateData(index, newSeries);
   };
 
   render() {
@@ -42,7 +42,7 @@ class LinechartForm extends React.Component {
                 <StateTextfield
                   key={datum.index}
                   index={datum.index}
-                  value={datum.series.map((year) => year.y)}
+                  series={datum.series}
                   handleChange={this.handleChange}
                 />
               </div>
