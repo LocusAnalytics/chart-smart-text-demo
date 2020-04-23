@@ -1,6 +1,7 @@
 import React from "react";
 import LinechartForm from "./LinechartForm";
 import { VictoryLine, VictoryChart, VictoryAxis, VictoryLegend } from "victory";
+import Text from "./Text";
 
 class Linechart extends React.Component {
   constructor(props) {
@@ -11,9 +12,10 @@ class Linechart extends React.Component {
           index: 1,
           label: "Engineering",
           series: [
-            { x: 2006, y: 2 },
-            { x: 2007, y: 3 },
-            { x: 2005, y: 1 },
+            { x: 2005, y: 2 },
+            { x: 2006, y: 3 },
+            { x: 2007, y: 1 },
+            { x: 2008, y: 8 },
           ],
         },
         {
@@ -23,15 +25,17 @@ class Linechart extends React.Component {
             { x: 2005, y: 4 },
             { x: 2006, y: 3 },
             { x: 2007, y: 2 },
+            { x: 2008, y: 2 },
           ],
         },
         {
           index: 3,
           label: "Pilot",
           series: [
-            { x: 2006, y: 6 },
-            { x: 2007, y: 3 },
-            { x: 2005, y: 7 },
+            { x: 2005, y: 6 },
+            { x: 2006, y: 3 },
+            { x: 2007, y: 7 },
+            { x: 2008, y: 8 },
           ],
         },
         {
@@ -41,6 +45,7 @@ class Linechart extends React.Component {
             { x: 2005, y: 2 },
             { x: 2006, y: 1 },
             { x: 2007, y: 5 },
+            { x: 2008, y: 10 },
           ],
         },
       ],
@@ -70,7 +75,9 @@ class Linechart extends React.Component {
     return (
       <div>
         <VictoryChart height={dim.h} width={dim.w}>
-          <VictoryAxis tickValues={[2005, 2006, 2007]} />
+          <VictoryAxis
+            tickValues={this.state.data[0].series.map((item) => item.x)}
+          />
           <VictoryAxis dependentAxis />
           {this.state.data.map((datum) => {
             return (
@@ -95,6 +102,7 @@ class Linechart extends React.Component {
           />
         </VictoryChart>
         <LinechartForm data={this.state.data} updateData={this.updateData} />
+        <Text />
       </div>
     );
   }
