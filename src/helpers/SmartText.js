@@ -4,7 +4,7 @@ function roundToDecimal(num, dec = 2) {
   return Math.round((num + Number.EPSILON) * factor) / factor;
 }
 
-function createSingleRegionMultipleBusinesses(data) {
+function processBarChartData(data) {
   // Make deep copy of data because splice later modifies the original array
   let dataCopy = [...data];
   /* I know that this iterates over the array 4 times,
@@ -22,6 +22,17 @@ function createSingleRegionMultipleBusinesses(data) {
   let maxToNextRatio = roundToDecimal(maxDatum.val / nextMaxDatum.val);
   let maxToMinRatio = roundToDecimal(maxDatum.val / minDatum.val);
 
+  return { maxDatum, nextMaxDatum, minDatum, maxToNextRatio, maxToMinRatio };
+}
+
+function createSingleRegionMultipleBusinesses(data) {
+  let {
+    maxDatum,
+    nextMaxDatum,
+    minDatum,
+    maxToNextRatio,
+    maxToMinRatio,
+  } = processBarChartData(data);
   let text =
     "Industry " +
     maxDatum.name +
@@ -40,8 +51,36 @@ function createSingleRegionMultipleBusinesses(data) {
   return text;
 }
 
+function createSingleBusinessMultipleRegions(data) {
+  let {
+    maxDatum,
+    nextMaxDatum,
+    minDatum,
+    maxToNextRatio,
+    maxToMinRatio,
+  } = processBarChartData(data);
+  let text =
+    "Region " +
+    maxDatum.name +
+    " is the largest and it is " +
+    maxDatum.val +
+    ", which is " +
+    maxToNextRatio +
+    " times larger than the next largest region " +
+    nextMaxDatum.name +
+    ", and " +
+    maxToMinRatio +
+    " times larger than the " +
+    data.length +
+    "th largest region " +
+    minDatum.name;
+  return text;
+}
+
 export function createSmartText(data, chartType) {
   if (chartType === "single region multiple businesses") {
     return createSingleRegionMultipleBusinesses(data);
+  } else if (chartType === "single business multiple regions") {
+    return createSingleBusinessMultipleRegions(data);
   }
 }

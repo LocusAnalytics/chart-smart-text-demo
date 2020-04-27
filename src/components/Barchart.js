@@ -75,10 +75,7 @@ class Barchart extends React.Component {
           />
         </VictoryChart>
         <BarchartForm data={this.state.data} updateData={this.updateData} />
-        <Text
-          data={this.state.data}
-          chartType="single region multiple businesses"
-        />
+        <Text data={this.state.data} chartType={this.props.chartType} />
       </div>
     );
   }

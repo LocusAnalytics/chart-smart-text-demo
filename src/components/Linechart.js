@@ -7,48 +7,7 @@ class Linechart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [
-        {
-          index: 1,
-          label: "Engineering",
-          series: [
-            { x: 2005, y: 2 },
-            { x: 2006, y: 3 },
-            { x: 2007, y: 1 },
-            { x: 2008, y: 8 },
-          ],
-        },
-        {
-          index: 2,
-          label: "Doctor",
-          series: [
-            { x: 2005, y: 4 },
-            { x: 2006, y: 3 },
-            { x: 2007, y: 2 },
-            { x: 2008, y: 2 },
-          ],
-        },
-        {
-          index: 3,
-          label: "Pilot",
-          series: [
-            { x: 2005, y: 6 },
-            { x: 2006, y: 3 },
-            { x: 2007, y: 7 },
-            { x: 2008, y: 8 },
-          ],
-        },
-        {
-          index: 4,
-          label: "Consultant",
-          series: [
-            { x: 2005, y: 2 },
-            { x: 2006, y: 1 },
-            { x: 2007, y: 5 },
-            { x: 2008, y: 10 },
-          ],
-        },
-      ],
+      data: this.props.data,
     };
     this.updateData = this.updateData.bind(this);
     this.addYear = this.addYear.bind(this);
