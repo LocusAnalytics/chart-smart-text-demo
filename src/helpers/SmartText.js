@@ -5,9 +5,10 @@ function roundToDecimal(num, dec = 2) {
 }
 
 function createSingleRegionMultipleBusinesses(data) {
+  // Make deep copy of data because splice later modifies the original array
+  let dataCopy = [...data];
   /* I know that this iterates over the array 4 times,
   but our arrays are always gonna be short */
-  let dataCopy = [...data];
   let maxDatum = dataCopy.reduce((prev, curr) => {
     return prev.val > curr.val ? prev : curr;
   });
