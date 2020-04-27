@@ -6,12 +6,7 @@ class Barchart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [
-        { index: 1, name: "Engineering", val: 7 },
-        { index: 2, name: "Doctor", val: 11 },
-        { index: 3, name: "Pilot", val: 8 },
-        { index: 4, name: "Consultant", val: 1 },
-      ],
+      data: this.props.data,
     };
     this.updateData = this.updateData.bind(this);
   }
@@ -80,7 +75,10 @@ class Barchart extends React.Component {
           />
         </VictoryChart>
         <BarchartForm data={this.state.data} updateData={this.updateData} />
-        <Text />
+        <Text
+          data={this.state.data}
+          chartType="single region multiple businesses"
+        />
       </div>
     );
   }
