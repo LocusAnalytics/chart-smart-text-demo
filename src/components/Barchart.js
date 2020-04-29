@@ -24,7 +24,7 @@ class Barchart extends React.Component {
   }
 
   render() {
-    const dim = { h: 200, w: 450, legend_w: 80, legend_h: 50 };
+    const dim = { h: 180, w: 350, legend_w: 50, legend_h: 20 };
     const chartPalette = [
       "#093959",
       "#0f3883",
@@ -37,15 +37,22 @@ class Barchart extends React.Component {
       return { name: datum.name, symbol: { fill: chartPalette[datum.index] } };
     });
 
+    const fontSize = 8;
+    const axisStyle = { tickLabels: { fontSize: fontSize } };
+    const legendStyle = {
+      border: { stroke: null },
+      labels: { fontSize: fontSize },
+    };
+
     return (
       <div>
         <VictoryChart
           height={dim.h}
           width={dim.w}
-          domainPadding={{ x: [15, 0] }}
+          domainPadding={{ x: [5, 0] }}
         >
-          <VictoryAxis dependentAxis />
-          <VictoryAxis tickFormat={() => ""} />
+          <VictoryAxis dependentAxis style={axisStyle} />
+          <VictoryAxis tickFormat={() => ""} style={axisStyle} />
           <VictoryBar
             data={this.state.data}
             alignment="middle"
@@ -61,6 +68,7 @@ class Barchart extends React.Component {
                   return chartPalette[datum.index];
                 },
               },
+              labels: { fontSize: fontSize },
             }}
           />
           <VictoryLegend
@@ -70,7 +78,7 @@ class Barchart extends React.Component {
             height={dim.legend_h}
             orientation="vertical"
             rowGutter={2}
-            style={{ border: { stroke: null }, labels: { fontSize: 10 } }}
+            style={legendStyle}
             data={legends}
           />
         </VictoryChart>
