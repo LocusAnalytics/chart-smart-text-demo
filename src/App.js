@@ -67,11 +67,13 @@ function App() {
         Demo for simple description of single region multiple businesses:
         <Barchart
           data={barchartData1}
+          nationAvg={5}
           chartType="single region multiple businesses"
         />
         Demo for simple description of single business multiple regions:
         <Barchart
           data={barchartData2}
+          nationAvg={4}
           chartType="single business multiple regions"
         />
         <Linechart

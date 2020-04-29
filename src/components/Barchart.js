@@ -75,7 +75,12 @@ class Barchart extends React.Component {
           />
         </VictoryChart>
         <BarchartForm data={this.state.data} updateData={this.updateData} />
-        <Text data={this.state.data} chartType={this.props.chartType} />
+        National Average: {this.props.nationAvg}
+        <Text
+          data={this.state.data}
+          chartType={this.props.chartType}
+          nationAvg={this.props.nationAvg}
+        />
       </div>
     );
   }

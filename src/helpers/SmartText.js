@@ -4,7 +4,7 @@ function roundToDecimal(num, dec = 2) {
   return Math.round((num + Number.EPSILON) * factor) / factor;
 }
 
-function processBarChartData(data) {
+function processBarChartData(data, nationAvg) {
   // Make deep copy of data because splice later modifies the original array
   let dataCopy = [...data];
   /* I know that this iterates over the array 4 times,
@@ -21,18 +21,27 @@ function processBarChartData(data) {
   });
   let maxToNextRatio = roundToDecimal(maxDatum.val / nextMaxDatum.val);
   let maxToMinRatio = roundToDecimal(maxDatum.val / minDatum.val);
+  let maxToNationalRatio = roundToDecimal(maxDatum.val / nationAvg);
 
-  return { maxDatum, nextMaxDatum, minDatum, maxToNextRatio, maxToMinRatio };
+  return {
+    maxDatum,
+    nextMaxDatum,
+    minDatum,
+    maxToNextRatio,
+    maxToMinRatio,
+    maxToNationalRatio,
+  };
 }
 
-function createSingleRegionMultipleBusinesses(data) {
+function createSingleRegionMultipleBusinesses(data, nationAvg) {
   let {
     maxDatum,
     nextMaxDatum,
     minDatum,
     maxToNextRatio,
     maxToMinRatio,
-  } = processBarChartData(data);
+    maxToNationalRatio,
+  } = processBarChartData(data, nationAvg);
   let text =
     "Industry " +
     maxDatum.name +
@@ -47,18 +56,22 @@ function createSingleRegionMultipleBusinesses(data) {
     " times larger than the " +
     data.length +
     "th largest industry " +
-    minDatum.name;
+    minDatum.name +
+    " and " +
+    maxToNationalRatio +
+    " times the national average";
   return text;
 }
 
-function createSingleBusinessMultipleRegions(data) {
+function createSingleBusinessMultipleRegions(data, nationAvg) {
   let {
     maxDatum,
     nextMaxDatum,
     minDatum,
     maxToNextRatio,
     maxToMinRatio,
-  } = processBarChartData(data);
+    maxToNationalRatio,
+  } = processBarChartData(data, nationAvg);
   let text =
     "Region " +
     maxDatum.name +
@@ -73,14 +86,33 @@ function createSingleBusinessMultipleRegions(data) {
     " times larger than the " +
     data.length +
     "th largest region " +
-    minDatum.name;
+    minDatum.name +
+    " and " +
+    maxToNationalRatio +
+    " times the national average";
   return text;
 }
 
-export function createSmartText(data, chartType) {
+function calculatePeriodChange(series) {
+  /* Given a series i.e. array of objects:
+  [{x: time, y: dependent val}]
+  Calculate change over time */
+  // in place sort ascending year
+  series.sort((a, b) => {
+    return a.x - b.x;
+  });
+
+  return (series[-1].y - series[0].y) / series[-1].y;
+}
+
+function processLineChartData(data) {
+  let dataCopy = [...data];
+}
+
+export function createSmartText(data, chartType, nationAvg) {
   if (chartType === "single region multiple businesses") {
-    return createSingleRegionMultipleBusinesses(data);
+    return createSingleRegionMultipleBusinesses(data, nationAvg);
   } else if (chartType === "single business multiple regions") {
-    return createSingleBusinessMultipleRegions(data);
+    return createSingleBusinessMultipleRegions(data, nationAvg);
   }
 }
