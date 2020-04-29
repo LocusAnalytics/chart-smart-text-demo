@@ -17,10 +17,19 @@ function App() {
     <div className="App">
       <header className="App-header">Smart Text Prototype Demo</header>
       <div className="App-body">
+        <h1>
+          For now, please mentally adjust the units to appropriate numbers (e.g.
+          business count is in thousands, annual payroll is in $1,000, and so
+          on...)
+        </h1>
         Demo for simple description of single region multiple businesses:
         <Barchart
           data={barchartData1}
-          chartProperties={{ nationAvg: 5 }}
+          chartProperties={{
+            nationAvg: 5,
+            region: "Arizona",
+            variable: "Count of businesses",
+          }}
           chartType="single region multiple businesses"
         />
         Demo for simple description of single business multiple regions:
