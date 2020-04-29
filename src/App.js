@@ -52,6 +52,11 @@ function App() {
           }}
           chartType="single business multiple regions"
         />
+        For time series, there are a lot more things to describe. For now, the
+        industry with largest net change between start and end will get a
+        description of how much they gained or lost. The industry with highest
+        final value will get their final value stated. The industry with highest
+        percent growth (if any) will get their pct growth stated.
         <Linechart
           data={linechartData1}
           chartType="single region multiple businesses line"
