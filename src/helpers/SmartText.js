@@ -87,7 +87,7 @@ function createSingleBusinessMultipleRegions(data, nationAvg) {
     data.length +
     "th largest region " +
     minDatum.name +
-    " and " +
+    ", and " +
     maxToNationalRatio +
     " times the national average";
   return text;
