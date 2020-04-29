@@ -2,20 +2,11 @@ import React from "react";
 import "./App.css";
 import Barchart from "./components/Barchart.js";
 import Linechart from "./components/Linechart.js";
+import { generateBarchartData } from "./helpers/generateData";
 
 function App() {
-  const barchartData1 = [
-    { index: 1, name: "Engineering", val: 7 },
-    { index: 2, name: "Doctor", val: 11 },
-    { index: 3, name: "Pilot", val: 8 },
-    { index: 4, name: "Consultant", val: 1 },
-  ];
-  const barchartData2 = [
-    { index: 1, name: "New York", val: 7 },
-    { index: 2, name: "Arizona", val: 11 },
-    { index: 3, name: "Florida", val: 8 },
-    { index: 4, name: "Atlanta", val: 1 },
-  ];
+  const barchartData1 = generateBarchartData(4, "fms");
+  const barchartData2 = generateBarchartData(4, "counties");
 
   const linechartData1 = [
     {
