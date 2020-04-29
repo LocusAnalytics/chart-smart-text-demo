@@ -1,3 +1,5 @@
+import { roundToDecimal } from "./smartTextHelpers";
+
 function processSeries(series) {
   /* Given a series i.e. array of objects:
     [{x: time, y: dependent val}]
@@ -11,7 +13,7 @@ function processSeries(series) {
   let periodStart = firstDatum.x;
   let periodEnd = lastDatum.x;
   let periodNetChange = lastDatum.y - firstDatum.y;
-  let periodPctChange = (periodNetChange / firstDatum.y) * 100;
+  let periodPctChange = Math.floor((periodNetChange / firstDatum.y) * 100);
   let finalVal = lastDatum.y;
   return {
     periodStart,
@@ -44,39 +46,49 @@ function processLineChartData(data) {
   };
 }
 
-export function createSingleRegionMultipleBusinessesLine(data, variable) {
+export function createSingleRegionMultipleBusinessesLine(data, properties) {
   let {
     highestNetChange,
     highestPctChange,
     highestFinalVal,
   } = processLineChartData(data);
   let addOrLost = highestNetChange.periodNetChange > 0 ? "added" : "lost";
+
+  // change is always positive (in text)
+  let change = Math.abs(highestNetChange.periodNetChange);
+  var growthStatement = "";
+  if (highestPctChange.periodPctChange > 0) {
+    growthStatement =
+      "Industry " +
+      highestPctChange.label +
+      " is the fastest growing, and it has grown " +
+      highestPctChange.periodPctChange +
+      "% from " +
+      highestPctChange.periodStart +
+      " to " +
+      highestPctChange.periodEnd;
+  }
   let text =
-    "Industry " +
     highestNetChange.label +
     " has " +
     addOrLost +
     " " +
-    highestNetChange.periodNetChange +
+    change +
     " " +
-    variable +
+    properties.variable +
     " between " +
     highestNetChange.periodStart +
     " and " +
     highestNetChange.periodEnd +
-    ". Industry " +
+    ". " +
     highestFinalVal.label +
     " has the highest value in " +
     highestFinalVal.periodEnd +
     ", at " +
     highestFinalVal.finalVal +
-    ". Industry " +
-    highestPctChange.label +
-    " is the fastest growing, and it has grown " +
-    highestPctChange.periodPctChange +
-    "% from " +
-    highestPctChange.periodStart +
-    " to " +
-    highestPctChange.periodEnd;
+    " " +
+    properties.variable +
+    ". " +
+    growthStatement;
   return text;
 }

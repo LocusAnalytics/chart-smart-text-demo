@@ -60,6 +60,10 @@ export function createSingleRegionMultipleBusinesses(data, properties) {
     minDatum.name +
     ". " +
     maxDatum.name +
+    "'s " +
+    properties.variable +
+    " in " +
+    properties.region +
     " is " +
     aboveOrBelow +
     " the national average by " +
@@ -101,9 +105,9 @@ export function createSingleBusinessMultipleRegions(data, properties) {
   } = processBarChartData(data, properties.nationAvg);
   let text =
     maxDatum.name +
-    " is the largest in " +
+    " has the largest " +
     properties.fm +
-    " by " +
+    " industry by " +
     properties.variable +
     ", " +
     maxToNextRatio +
@@ -117,6 +121,10 @@ export function createSingleBusinessMultipleRegions(data, properties) {
     minDatum.name +
     ". " +
     maxDatum.name +
+    "'s " +
+    properties.variable +
+    " in " +
+    properties.fm +
     " is " +
     maxToNationalRatio +
     " times the national average.";

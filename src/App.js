@@ -11,7 +11,7 @@ function App() {
   const barchartData1 = generateBarchartData(4, "fms");
   const barchartData2 = generateBarchartData(4, "counties");
 
-  const linechartData1 = generateLinechartData(4, "fms", 5);
+  const linechartData1 = generateLinechartData(3, "fms", 4);
 
   return (
     <div className="App">
@@ -27,7 +27,7 @@ function App() {
           data={barchartData1}
           chartProperties={{
             nationAvg: 15,
-            region: "Seneca County. NY",
+            region: "Seneca County, NY",
             variable: "Count of businesses",
           }}
           chartType="single region multiple businesses"

@@ -14,9 +14,6 @@ export function createSmartText(data, chartType, chartProperties) {
   } else if (chartType === "single business multiple regions") {
     return createSingleBusinessMultipleRegions(data, chartProperties);
   } else if (chartType === "single region multiple businesses line") {
-    return createSingleRegionMultipleBusinessesLine(
-      data,
-      chartProperties.variable
-    );
+    return createSingleRegionMultipleBusinessesLine(data, chartProperties);
   }
 }
