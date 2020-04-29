@@ -26,16 +26,30 @@ function App() {
         <Barchart
           data={barchartData1}
           chartProperties={{
-            nationAvg: 5,
-            region: "Arizona",
+            nationAvg: 15,
+            region: "Seneca County. NY",
             variable: "Count of businesses",
           }}
           chartType="single region multiple businesses"
         />
+        Demo for simple description of single region multiple businesses LQ:
+        <Barchart
+          data={barchartData1}
+          chartProperties={{
+            nationAvg: 3,
+            region: "Parker County, TX",
+            variable: "Count of businesses",
+          }}
+          chartType="single region multiple businesses lq"
+        />
         Demo for simple description of single business multiple regions:
         <Barchart
           data={barchartData2}
-          chartProperties={{ nationAvg: 5 }}
+          chartProperties={{
+            nationAvg: 5,
+            fm: "Banking and Loans",
+            variable: "Employment",
+          }}
           chartType="single business multiple regions"
         />
         <Linechart

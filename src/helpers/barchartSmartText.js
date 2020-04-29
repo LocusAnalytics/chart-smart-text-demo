@@ -38,24 +38,55 @@ export function createSingleRegionMultipleBusinesses(data, properties) {
     maxToMinRatio,
     maxToNationalRatio,
   } = processBarChartData(data, properties.nationAvg);
+  let aboveOrBelow = maxToNationalRatio > 1 ? "above" : "below";
+
+  // Because it is percent above or below national, not pct of national
+  let maxToNationalPct = Math.round(Math.abs(maxToNationalRatio * 100 - 100));
   let text =
-    "Industry " +
     maxDatum.name +
-    " is the largest and it is " +
-    maxDatum.val +
-    ", which is " +
+    " is the largest in " +
+    properties.region +
+    " by " +
+    properties.variable +
+    ", " +
     maxToNextRatio +
-    " times larger than the next largest industry " +
+    " times as large as the next largest industry - " +
     nextMaxDatum.name +
     ", and " +
     maxToMinRatio +
-    " times larger than the " +
+    " times as large as the " +
     data.length +
-    "th largest industry " +
+    "th largest industry - " +
     minDatum.name +
-    " and " +
+    ". " +
+    maxDatum.name +
+    " is " +
+    aboveOrBelow +
+    " the national average by " +
+    maxToNationalPct +
+    "%";
+
+  return text;
+}
+
+export function createSingleRegionMultipleBusinessesLQ(data, properties) {
+  let {
+    maxDatum,
+    nextMaxDatum,
+    minDatum,
+    maxToNextRatio,
+    maxToMinRatio,
+    maxToNationalRatio,
+  } = processBarChartData(data, properties.nationAvg);
+  let text =
+    maxDatum.name +
+    " is the most concentrated in " +
+    properties.region +
+    " by " +
+    properties.variable +
+    ", and is " +
     maxToNationalRatio +
-    " times the national average";
+    " times the national average.";
   return text;
 }
 
@@ -69,22 +100,25 @@ export function createSingleBusinessMultipleRegions(data, properties) {
     maxToNationalRatio,
   } = processBarChartData(data, properties.nationAvg);
   let text =
-    "Region " +
     maxDatum.name +
-    " is the largest and it is " +
-    maxDatum.val +
-    ", which is " +
+    " is the largest in " +
+    properties.fm +
+    " by " +
+    properties.variable +
+    ", " +
     maxToNextRatio +
-    " times larger than the next largest region " +
+    " times as large as the next largest county - " +
     nextMaxDatum.name +
     ", and " +
     maxToMinRatio +
-    " times larger than the " +
+    " times as large as the " +
     data.length +
-    "th largest region " +
+    "th largest county - " +
     minDatum.name +
-    ", and " +
+    ". " +
+    maxDatum.name +
+    " is " +
     maxToNationalRatio +
-    " times the national average";
+    " times the national average.";
   return text;
 }
