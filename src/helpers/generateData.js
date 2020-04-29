@@ -33,7 +33,7 @@ export function generateBarchartData(
 ) {
   /* Generate barchart with randonmized data for n counties or fms
   data_upper_bounds is at 30 because Slider.js currently has a max set at 30*/
-  let res = [];
+  let res = new Array(n);
   let randomNames = getRandom(
     counties_or_fms === "counties" ? counties : fms,
     n
@@ -43,6 +43,40 @@ export function generateBarchartData(
       index: n,
       name: randomNames[n],
       val: roundToDecimal(Math.random() * data_upper_bounds, 1),
+    };
+  }
+  return res;
+}
+
+function _generateSeries(n_years, startYear, data_upper_bounds) {
+  let series = new Array(n_years);
+  while (n_years--) {
+    let year = startYear + n_years;
+    series[n_years] = {
+      x: year,
+      y: Math.floor(Math.random() * data_upper_bounds),
+    };
+  }
+  return series;
+}
+
+export function generateLinechartData(
+  n,
+  counties_or_fms,
+  n_years,
+  startYear = 2005,
+  data_upper_bounds = 30
+) {
+  let res = new Array(n);
+  let randomNames = getRandom(
+    counties_or_fms === "counties" ? counties : fms,
+    n
+  );
+  while (n--) {
+    res[n] = {
+      index: n,
+      label: randomNames[n],
+      series: _generateSeries(n_years, startYear, data_upper_bounds),
     };
   }
   return res;
