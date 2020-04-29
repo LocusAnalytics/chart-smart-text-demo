@@ -67,18 +67,19 @@ function App() {
         Demo for simple description of single region multiple businesses:
         <Barchart
           data={barchartData1}
-          nationAvg={5}
+          chartProperties={{ nationAvg: 5 }}
           chartType="single region multiple businesses"
         />
         Demo for simple description of single business multiple regions:
         <Barchart
           data={barchartData2}
-          nationAvg={4}
+          chartProperties={{ nationAvg: 5 }}
           chartType="single business multiple regions"
         />
         <Linechart
           data={linechartData1}
           chartType="single region multiple businesses line"
+          chartProperties={{ variable: "jobs" }}
         />
       </div>
     </div>

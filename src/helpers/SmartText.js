@@ -139,7 +139,7 @@ function processLineChartData(data) {
   };
 }
 
-function createSingleRegionMultipleBusinessesLine(data) {
+function createSingleRegionMultipleBusinessesLine(data, variable) {
   let {
     highestNetChange,
     highestPctChange,
@@ -153,7 +153,9 @@ function createSingleRegionMultipleBusinessesLine(data) {
     addOrLost +
     " " +
     highestNetChange.periodNetChange +
-    " jobs between " +
+    " " +
+    variable +
+    " between " +
     highestNetChange.periodStart +
     " and " +
     highestNetChange.periodEnd +
@@ -174,12 +176,18 @@ function createSingleRegionMultipleBusinessesLine(data) {
   return text;
 }
 
-export function createSmartText(data, chartType, nationAvg) {
+export function createSmartText(data, chartType, chartProperties) {
   if (chartType === "single region multiple businesses") {
-    return createSingleRegionMultipleBusinesses(data, nationAvg);
+    return createSingleRegionMultipleBusinesses(
+      data,
+      chartProperties.nationAvg
+    );
   } else if (chartType === "single business multiple regions") {
-    return createSingleBusinessMultipleRegions(data, nationAvg);
+    return createSingleBusinessMultipleRegions(data, chartProperties.nationAvg);
   } else if (chartType === "single region multiple businesses line") {
-    return createSingleRegionMultipleBusinessesLine(data);
+    return createSingleRegionMultipleBusinessesLine(
+      data,
+      chartProperties.variable
+    );
   }
 }

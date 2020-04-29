@@ -79,7 +79,11 @@ class Linechart extends React.Component {
           updateData={this.updateData}
           addYear={this.addYear}
         />
-        <Text data={this.state.data} chartType={this.props.chartType} />
+        <Text
+          data={this.state.data}
+          chartType={this.props.chartType}
+          chartProperties={this.props.chartProperties}
+        />
       </div>
     );
   }

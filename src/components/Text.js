@@ -8,7 +8,7 @@ class Text extends React.Component {
     const smartText = createSmartText(
       this.props.data,
       this.props.chartType,
-      this.props.nationAvg
+      this.props.chartProperties
     );
 
     return (
