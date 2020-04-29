@@ -78,7 +78,7 @@ function App() {
         />
         <Linechart
           data={linechartData1}
-          chartType="single region multiple businesses time"
+          chartType="single region multiple businesses line"
         />
       </div>
     </div>
