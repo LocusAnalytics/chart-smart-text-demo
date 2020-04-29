@@ -29,7 +29,7 @@ function processBarChartData(data, nationAvg) {
   };
 }
 
-export function createSingleRegionMultipleBusinesses(data, nationAvg) {
+export function createSingleRegionMultipleBusinesses(data, properties) {
   let {
     maxDatum,
     nextMaxDatum,
@@ -37,7 +37,7 @@ export function createSingleRegionMultipleBusinesses(data, nationAvg) {
     maxToNextRatio,
     maxToMinRatio,
     maxToNationalRatio,
-  } = processBarChartData(data, nationAvg);
+  } = processBarChartData(data, properties.nationAvg);
   let text =
     "Industry " +
     maxDatum.name +
@@ -59,7 +59,7 @@ export function createSingleRegionMultipleBusinesses(data, nationAvg) {
   return text;
 }
 
-export function createSingleBusinessMultipleRegions(data, nationAvg) {
+export function createSingleBusinessMultipleRegions(data, properties) {
   let {
     maxDatum,
     nextMaxDatum,
@@ -67,7 +67,7 @@ export function createSingleBusinessMultipleRegions(data, nationAvg) {
     maxToNextRatio,
     maxToMinRatio,
     maxToNationalRatio,
-  } = processBarChartData(data, nationAvg);
+  } = processBarChartData(data, properties.nationAvg);
   let text =
     "Region " +
     maxDatum.name +
