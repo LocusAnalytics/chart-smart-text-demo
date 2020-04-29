@@ -22,6 +22,11 @@ function App() {
           business count is in thousands, annual payroll is in $1,000, and so
           on...)
         </h1>
+        <div>
+          Also, apologies for the cut off legends... Hope it doesn't affect too
+          much.
+        </div>
+        <br />
         Demo for simple description of single region multiple businesses:
         <Barchart
           data={barchartData1}

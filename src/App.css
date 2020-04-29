@@ -13,6 +13,10 @@
   color: white;
 }
 
+h1 {
+  font-size: 2.5vmin;
+}
+
 .App-body {
   margin: 5vmin 15vmin 15vmin 5vmin;
 }
