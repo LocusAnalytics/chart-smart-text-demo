@@ -34,43 +34,30 @@ export function createSingleRegionMultipleBusinesses(data, properties) {
     maxDatum,
     nextMaxDatum,
     minDatum,
-    maxToNextRatio,
-    maxToMinRatio,
+    highestToNextHighestRatio,
+    highestToLowestRatio,
     maxToNationalRatio,
   } = processBarChartData(data, properties.nationAvg);
-  let aboveOrBelow = maxToNationalRatio > 1 ? "above" : "below";
+  var highestIndustryName = maxDatum.name;
+  var regionName = properties.region;
+  var variableName = properties.variable;
+  var nextHighestIndustryName = nextMaxDatum.name;
+  var numOfIndustriesShown = data.length;
+  var lowestIndustryName = minDatum.name;
+  var aboveOrBelow = maxToNationalRatio > 1 ? "above" : "below";
 
   // Because it is percent above or below national, not pct of national
-  let maxToNationalPct = Math.round(Math.abs(maxToNationalRatio * 100 - 100));
-  let text =
-    maxDatum.name +
-    " is the largest in " +
-    properties.region +
-    " by " +
-    properties.variable +
-    ", " +
-    maxToNextRatio +
-    " times as large as the next largest industry - " +
-    nextMaxDatum.name +
-    ", and " +
-    maxToMinRatio +
-    " times as large as the " +
-    data.length +
-    "th largest industry - " +
-    minDatum.name +
-    ". " +
-    maxDatum.name +
-    "'s " +
-    properties.variable +
-    " in " +
-    properties.region +
-    " is " +
-    aboveOrBelow +
-    " the national average by " +
-    maxToNationalPct +
-    "%";
+  var highestToNationalPercent = Math.round(
+    Math.abs(maxToNationalRatio * 100 - 100)
+  );
+  let template = `${highestIndustryName} is the the largest in ${regionName} by
+  ${variableName}, ${highestToNextHighestRatio} times as large as the next largest industry,
+  ${nextHighestIndustryName}, and ${highestToLowestRatio} times as large as
+  the ${numOfIndustriesShown}th largest industry, ${lowestIndustryName}.
+  ${highestIndustryName}'s and ${variableName} in ${regionName} is ${aboveOrBelow}
+  the national average by ${highestToNationalPercent}%.`;
 
-  return text;
+  return template;
 }
 
 export function createSingleRegionMultipleBusinessesLQ(data, properties) {
