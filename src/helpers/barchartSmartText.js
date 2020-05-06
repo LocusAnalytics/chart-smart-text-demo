@@ -50,11 +50,11 @@ export function createSingleRegionMultipleBusinesses(data, properties) {
   var highestToNationalPercent = Math.round(
     Math.abs(maxToNationalRatio * 100 - 100)
   );
-  let template = `${highestIndustryName} is the the largest in ${regionName} by
-  ${variableName}, ${highestToNextHighestRatio} times as large as the next largest industry,
-  ${nextHighestIndustryName}, and ${highestToLowestRatio} times as large as
-  the ${numOfIndustriesShown}th largest industry, ${lowestIndustryName}.
-  ${highestIndustryName}'s and ${variableName} in ${regionName} is ${aboveOrBelow}
+  let template = `${highestIndustryName} is the the largest in ${regionName} by\
+  ${variableName}, ${highestToNextHighestRatio} times as large as the next largest industry,\
+  ${nextHighestIndustryName}, and ${highestToLowestRatio} times as large as\
+  the ${numOfIndustriesShown}th largest industry, ${lowestIndustryName}.\
+  ${highestIndustryName}'s and ${variableName} in ${regionName} is ${aboveOrBelow}\
   the national average by ${highestToNationalPercent}%.`;
 
   return template;
