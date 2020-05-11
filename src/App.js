@@ -41,7 +41,7 @@ function App() {
         <Barchart
           data={barchartData1}
           chartProperties={{
-            nationAvg: 3,
+            nationAvg: 1, // LQ will always have national value to be 1
             region: "Parker County, TX",
             variable: "Count of businesses",
           }}
