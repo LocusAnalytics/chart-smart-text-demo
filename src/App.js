@@ -6,12 +6,17 @@ import {
   generateBarchartData,
   generateLinechartData,
 } from "./helpers/generateData";
+import { seriesWithPeak } from "./exampleData/exampleData";
 
 function App() {
   const barchartData1 = generateBarchartData(4, "fms");
   const barchartData2 = generateBarchartData(4, "counties");
 
   const linechartData1 = generateLinechartData(3, "fms", 4);
+  const linechartDataPeak = [
+    ...generateLinechartData(2, "fms", 10, 2006, 10),
+    { index: 2, label: "Engineering", series: seriesWithPeak },
+  ];
 
   return (
     <div className="App">
@@ -27,6 +32,12 @@ function App() {
           much.
         </div>
         <br />
+        Demo for Linechart with a peak.
+        <Linechart
+          data={linechartDataPeak}
+          chartType="single region multiple businesses line"
+          chartProperties={{ variable: "establishments" }}
+        />
         Demo for simple description of single region multiple businesses:
         <Barchart
           data={barchartData1}

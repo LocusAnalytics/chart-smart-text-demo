@@ -1,7 +1,7 @@
 import { roundToDecimal } from "./smartTextHelpers";
 import { fms, counties } from "./params";
 
-function getRandom(arr, n) {
+export function getRandom(arr, n) {
   /* Get n random elements from arr
     Using black magic Fisher-Yates shuffle
     Code is from here

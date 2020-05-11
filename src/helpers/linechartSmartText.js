@@ -7,10 +7,18 @@ function findSeriesPeak(series) {
     is higher than every other items in the series, return that peak item.
     Otherwise, return null */
 
+  let { periodStart, periodEnd } = processSeries(series);
+
   let seriesMax = Math.max.apply(
     Math,
     series.map((datum) => datum.y)
   );
+
+  if (seriesMax.x !== periodStart && seriesMax.y !== periodEnd) {
+    return seriesMax;
+  } else {
+    return null;
+  }
 }
 
 function processSeries(series) {
@@ -61,7 +69,7 @@ function processLineChartData(data) {
   };
 }
 
-export function createSingleRegionMultipleBusinessesLine(data, properties) {
+function generateBasicDescription(data, properties) {
   let {
     highestNetChange,
     highestPctChange,
@@ -86,4 +94,8 @@ export function createSingleRegionMultipleBusinessesLine(data, properties) {
   ${growthStatement}`;
 
   return template;
+}
+
+export function createSingleRegionMultipleBusinessesLine(data, properties) {
+  return generateBasicDescription(data, properties);
 }
