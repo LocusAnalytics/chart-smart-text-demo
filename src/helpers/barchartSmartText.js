@@ -50,7 +50,7 @@ export function createSingleRegionMultipleBusinesses(data, properties) {
   var highestToNationalPercent = Math.round(
     Math.abs(maxToNationalRatio * 100 - 100)
   );
-  let template = `${highestIndustryName} is the the largest in ${regionName} by\
+  let template = `${highestIndustryName} is the largest in ${regionName} by\
   ${variableName}, ${highestToNextHighestRatio} times as large as the next largest industry,\
   ${nextHighestIndustryName}, and ${highestToLowestRatio} times as large as\
   the ${numOfIndustriesShown}th largest industry, ${lowestIndustryName}.\
@@ -69,16 +69,11 @@ export function createSingleRegionMultipleBusinessesLQ(data, properties) {
     maxToMinRatio,
     maxToNationalRatio,
   } = processBarChartData(data, properties.nationAvg);
-  let text =
-    maxDatum.name +
-    " is the most concentrated in " +
-    properties.region +
-    " by " +
-    properties.variable +
-    ", and is " +
-    maxToNationalRatio +
-    " times the national average.";
-  return text;
+  let highestIndustryName = maxDatum.name;
+  let template = `You have the highest comparative in ${highestIndustryName}, \
+  which is ${maxToNationalRatio} times the national average`;
+
+  return template;
 }
 
 export function createSingleBusinessMultipleRegions(data, properties) {
@@ -86,34 +81,28 @@ export function createSingleBusinessMultipleRegions(data, properties) {
     maxDatum,
     nextMaxDatum,
     minDatum,
-    maxToNextRatio,
-    maxToMinRatio,
+    highestToNextHighestRatio,
+    highestToLowestRatio,
     maxToNationalRatio,
   } = processBarChartData(data, properties.nationAvg);
-  let text =
-    maxDatum.name +
-    " has the largest " +
-    properties.fm +
-    " industry by " +
-    properties.variable +
-    ", " +
-    maxToNextRatio +
-    " times as large as the next largest county - " +
-    nextMaxDatum.name +
-    ", and " +
-    maxToMinRatio +
-    " times as large as the " +
-    data.length +
-    "th largest county - " +
-    minDatum.name +
-    ". " +
-    maxDatum.name +
-    "'s " +
-    properties.variable +
-    " in " +
-    properties.fm +
-    " is " +
-    maxToNationalRatio +
-    " times the national average.";
-  return text;
+  var highestRegionName = maxDatum.name;
+  var industryName = properties.fm;
+  var variableName = properties.variable;
+  var nextHighestRegionName = nextMaxDatum.name;
+  var numOfRegionsShown = data.length;
+  var lowestRegionName = minDatum.name;
+  var aboveOrBelow = maxToNationalRatio > 1 ? "above" : "below";
+
+  // Because it is percent above or below national, not pct of national
+  var highestToNationalPercent = Math.round(
+    Math.abs(maxToNationalRatio * 100 - 100)
+  );
+  let template = `${highestRegionName} has the largest ${industryName} industry by\
+  ${variableName}, ${highestToNextHighestRatio} times as large as the next largest county, \
+  ${nextHighestRegionName}, and ${highestToLowestRatio} times as large as\
+  the ${numOfRegionsShown}th largest county, ${lowestRegionName}. \
+  ${highestRegionName}'s ${variableName} in ${industryName} is ${aboveOrBelow}\
+  the national average by ${highestToNationalPercent}%.`;
+
+  return template;
 }
