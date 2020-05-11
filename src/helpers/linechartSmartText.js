@@ -1,5 +1,18 @@
 import { roundToDecimal } from "./smartTextHelpers";
 
+function findSeriesPeak(series) {
+  /* Given a series i.e. array of objects:
+    [{x: time, y: dependent val}]
+    If series has a peak, i.e. an item that is not at the start or the end which
+    is higher than every other items in the series, return that peak item.
+    Otherwise, return null */
+
+  let seriesMax = Math.max.apply(
+    Math,
+    series.map((datum) => datum.y)
+  );
+}
+
 function processSeries(series) {
   /* Given a series i.e. array of objects:
     [{x: time, y: dependent val}]
@@ -16,6 +29,8 @@ function processSeries(series) {
   let periodPctChange = Math.floor((periodNetChange / firstDatum.y) * 100);
   let finalVal = lastDatum.y;
   return {
+    firstDatum,
+    lastDatum,
     periodStart,
     periodEnd,
     periodNetChange,
@@ -65,7 +80,7 @@ export function createSingleRegionMultipleBusinessesLine(data, properties) {
   }
 
   let template = `${highestNetChange.label} has ${addOrLost} ${change} \
-  ${properties.label} between ${highestNetChange.periodStart} and \
+  ${properties.variable} between ${highestNetChange.periodStart} and \
   ${highestNetChange.periodEnd}. ${highestFinalVal.label} has the highest value \
   in ${highestFinalVal.periodEnd}, at ${highestFinalVal.finalVal} ${properties.variable}. \
   ${growthStatement}`;

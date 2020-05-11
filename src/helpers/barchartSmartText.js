@@ -1,4 +1,5 @@
 import { roundToDecimal } from "./smartTextHelpers";
+import { Container } from "@material-ui/core";
 
 function processBarChartData(data, nationAvg) {
   // Make deep copy of data because splice later modifies the original array
@@ -34,8 +35,8 @@ export function createSingleRegionMultipleBusinesses(data, properties) {
     maxDatum,
     nextMaxDatum,
     minDatum,
-    highestToNextHighestRatio,
-    highestToLowestRatio,
+    maxToNextRatio,
+    maxToMinRatio,
     maxToNationalRatio,
   } = processBarChartData(data, properties.nationAvg);
   var highestIndustryName = maxDatum.name;
@@ -50,9 +51,10 @@ export function createSingleRegionMultipleBusinesses(data, properties) {
   var highestToNationalPercent = Math.round(
     Math.abs(maxToNationalRatio * 100 - 100)
   );
+
   let template = `${highestIndustryName} is the largest in ${regionName} by\
-  ${variableName}, ${highestToNextHighestRatio} times as large as the next largest industry,\
-  ${nextHighestIndustryName}, and ${highestToLowestRatio} times as large as\
+  ${variableName}, ${maxToNextRatio} times as large as the next largest industry,\
+  ${nextHighestIndustryName}, and ${maxToMinRatio} times as large as\
   the ${numOfIndustriesShown}th largest industry, ${lowestIndustryName}.\
   ${highestIndustryName}'s and ${variableName} in ${regionName} is ${aboveOrBelow}\
   the national average by ${highestToNationalPercent}%.`;
@@ -61,14 +63,10 @@ export function createSingleRegionMultipleBusinesses(data, properties) {
 }
 
 export function createSingleRegionMultipleBusinessesLQ(data, properties) {
-  let {
-    maxDatum,
-    nextMaxDatum,
-    minDatum,
-    maxToNextRatio,
-    maxToMinRatio,
-    maxToNationalRatio,
-  } = processBarChartData(data, properties.nationAvg);
+  let { maxDatum, maxToNationalRatio } = processBarChartData(
+    data,
+    properties.nationAvg
+  );
   let highestIndustryName = maxDatum.name;
   let template = `You have the highest comparative in ${highestIndustryName}, \
   which is ${maxToNationalRatio} times the national average`;
@@ -81,8 +79,8 @@ export function createSingleBusinessMultipleRegions(data, properties) {
     maxDatum,
     nextMaxDatum,
     minDatum,
-    highestToNextHighestRatio,
-    highestToLowestRatio,
+    maxToNextRatio,
+    maxToMinRatio,
     maxToNationalRatio,
   } = processBarChartData(data, properties.nationAvg);
   var highestRegionName = maxDatum.name;
@@ -98,8 +96,8 @@ export function createSingleBusinessMultipleRegions(data, properties) {
     Math.abs(maxToNationalRatio * 100 - 100)
   );
   let template = `${highestRegionName} has the largest ${industryName} industry by\
-  ${variableName}, ${highestToNextHighestRatio} times as large as the next largest county, \
-  ${nextHighestRegionName}, and ${highestToLowestRatio} times as large as\
+  ${variableName}, ${maxToNextRatio} times as large as the next largest county, \
+  ${nextHighestRegionName}, and ${maxToMinRatio} times as large as\
   the ${numOfRegionsShown}th largest county, ${lowestRegionName}. \
   ${highestRegionName}'s ${variableName} in ${industryName} is ${aboveOrBelow}\
   the national average by ${highestToNationalPercent}%.`;
