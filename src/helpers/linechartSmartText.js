@@ -58,37 +58,17 @@ export function createSingleRegionMultipleBusinessesLine(data, properties) {
   let change = Math.abs(highestNetChange.periodNetChange);
   var growthStatement = "";
   if (highestPctChange.periodPctChange > 0) {
-    growthStatement =
-      "Industry " +
-      highestPctChange.label +
-      " is the fastest growing, and it has grown " +
-      highestPctChange.periodPctChange +
-      "% from " +
-      highestPctChange.periodStart +
-      " to " +
-      highestPctChange.periodEnd;
+    growthStatement = `Industry ${highestPctChange.label} is the fastest growing,\
+      and it has grown \
+      ${highestPctChange.periodPctChange}% \
+      from ${highestPctChange.periodStart} to ${highestPctChange.periodEnd}`;
   }
-  let text =
-    highestNetChange.label +
-    " has " +
-    addOrLost +
-    " " +
-    change +
-    " " +
-    properties.variable +
-    " between " +
-    highestNetChange.periodStart +
-    " and " +
-    highestNetChange.periodEnd +
-    ". " +
-    highestFinalVal.label +
-    " has the highest value in " +
-    highestFinalVal.periodEnd +
-    ", at " +
-    highestFinalVal.finalVal +
-    " " +
-    properties.variable +
-    ". " +
-    growthStatement;
-  return text;
+
+  let template = `${highestNetChange.label} has ${addOrLost} ${change} \
+  ${properties.label} between ${highestNetChange.periodStart} and \
+  ${highestNetChange.periodEnd}. ${highestFinalVal.label} has the highest value \
+  in ${highestFinalVal.periodEnd}, at ${highestFinalVal.finalVal} ${properties.variable}. \
+  ${growthStatement}`;
+
+  return template;
 }
