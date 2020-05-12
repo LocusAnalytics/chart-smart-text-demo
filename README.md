@@ -1,3 +1,16 @@
+This is a demo for Locus' SmartText chart description text generator. In the demo you can change data to see how the SmartText will change in response.
+
+Currently, the data input shape is:
+```
+For barcharts (point in time):
+[{index: int, name: str, val: float}]
+
+For linecharts (time series):
+[{index: int, label: str, series: Array<float>}]
+```
+
+[Live demo here](https://chart-smart-text-locus.netlify.app/)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
