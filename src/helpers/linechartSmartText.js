@@ -7,9 +7,9 @@ function findSeriesPeak(series) {
     is higher than every other items in the series, return that peak item.
     Otherwise, return null */
 
-  let { periodStart, periodEnd } = processSeries(series);
+  const { periodStart, periodEnd } = processSeries(series);
 
-  let seriesMax = Math.max.apply(
+  const seriesMax = Math.max.apply(
     Math,
     series.map((datum) => datum.y)
   );
@@ -29,13 +29,13 @@ function processSeries(series) {
   series.sort((a, b) => {
     return a.x - b.x;
   });
-  let firstDatum = series[0];
-  let lastDatum = series[series.length - 1];
-  let periodStart = firstDatum.x;
-  let periodEnd = lastDatum.x;
-  let periodNetChange = lastDatum.y - firstDatum.y;
-  let periodPctChange = Math.floor((periodNetChange / firstDatum.y) * 100);
-  let finalVal = lastDatum.y;
+  const firstDatum = series[0];
+  const lastDatum = series[series.length - 1];
+  const periodStart = firstDatum.x;
+  const periodEnd = lastDatum.x;
+  const periodNetChange = lastDatum.y - firstDatum.y;
+  const periodPctChange = Math.floor((periodNetChange / firstDatum.y) * 100);
+  const finalVal = lastDatum.y;
   return {
     firstDatum,
     lastDatum,
@@ -48,17 +48,17 @@ function processSeries(series) {
 }
 
 function processLineChartData(data) {
-  let dataCopy = [...data];
-  let fullData = dataCopy.map((datum) => {
+  const dataCopy = [...data];
+  const fullData = dataCopy.map((datum) => {
     return { ...datum, ...processSeries(datum.series) };
   });
-  let highestNetChange = fullData.reduce((prev, curr) => {
+  const highestNetChange = fullData.reduce((prev, curr) => {
     return prev.periodNetChange > curr.periodNetChange ? prev : curr;
   });
-  let highestPctChange = fullData.reduce((prev, curr) => {
+  const highestPctChange = fullData.reduce((prev, curr) => {
     return prev.periodPctChange > curr.periodPctChange ? prev : curr;
   });
-  let highestFinalVal = fullData.reduce((prev, curr) => {
+  const highestFinalVal = fullData.reduce((prev, curr) => {
     return prev.finalVal > curr.finalVal ? prev : curr;
   });
 
@@ -70,16 +70,16 @@ function processLineChartData(data) {
 }
 
 function generateBasicDescription(data, properties) {
-  let {
+  const {
     highestNetChange,
     highestPctChange,
     highestFinalVal,
   } = processLineChartData(data);
-  let addOrLost = highestNetChange.periodNetChange > 0 ? "added" : "lost";
+  const addOrLost = highestNetChange.periodNetChange > 0 ? "added" : "lost";
 
   // change is always positive (in text)
-  let change = Math.abs(highestNetChange.periodNetChange);
-  var growthStatement = "";
+  const change = Math.abs(highestNetChange.periodNetChange);
+  let growthStatement = "";
   if (highestPctChange.periodPctChange > 0) {
     growthStatement = `Industry ${highestPctChange.label} is the fastest growing,\
       and it has grown \
@@ -87,7 +87,7 @@ function generateBasicDescription(data, properties) {
       from ${highestPctChange.periodStart} to ${highestPctChange.periodEnd}`;
   }
 
-  let template = `${highestNetChange.label} has ${addOrLost} ${change} \
+  const template = `${highestNetChange.label} has ${addOrLost} ${change} \
   ${properties.variable} between ${highestNetChange.periodStart} and \
   ${highestNetChange.periodEnd}. ${highestFinalVal.label} has the highest value \
   in ${highestFinalVal.periodEnd}, at ${highestFinalVal.finalVal} ${properties.variable}. \
