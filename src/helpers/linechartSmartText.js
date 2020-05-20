@@ -1,5 +1,7 @@
 import { roundToDecimal } from "./smartTextHelpers";
 
+// THESE FUNCTIONS PROCESS SERIES DATA (ARRAYS OF  {X: YEAR, Y: VALUE})
+
 function findSeriesPeak(series) {
   /* Given a series i.e. array of objects:
     [{x: time, y: dependent val}]
@@ -9,10 +11,9 @@ function findSeriesPeak(series) {
 
   const { periodStart, periodEnd } = processSeries(series);
 
-  const seriesMax = Math.max.apply(
-    Math,
-    series.map((datum) => datum.y)
-  );
+  const seriesMax = series.reduce((prev, curr) => {
+    return prev.y > curr.y ? prev : curr;
+  });
 
   if (seriesMax.x !== periodStart && seriesMax.y !== periodEnd) {
     return seriesMax;
@@ -24,7 +25,8 @@ function findSeriesPeak(series) {
 function processSeries(series) {
   /* Given a series i.e. array of objects:
     [{x: time, y: dependent val}]
-    Calculate a bunch of things */
+    Calculate a bunch of things that mainly feed into the basic desc,
+    but are also useful for other desc */
   // in place sort ascending year
   series.sort((a, b) => {
     return a.x - b.x;
@@ -47,7 +49,12 @@ function processSeries(series) {
   };
 }
 
+// THESE FUNCTIONS PROCESS LINE CHART DATA, I.E.:
+// ARRAYS OF {LABEL: FM OR CTY NAME, SERIES: TIME SERIES}
+
 function processLineChartData(data) {
+  /* Given data with many series, calculate a few things that
+  are useful to generate the basic desc */
   const dataCopy = [...data];
   const fullData = dataCopy.map((datum) => {
     return { ...datum, ...processSeries(datum.series) };
@@ -69,6 +76,9 @@ function processLineChartData(data) {
   };
 }
 
+// THESE FUNCTIONS ACTUALLY CALL ON THE DATA PROCESSORS
+// AND USE THEIR OUTPUT TO STITCH TOGETHER REAL DESCRIPTION TEXTS
+
 function generateBasicDescription(data, properties) {
   const {
     highestNetChange,
@@ -78,29 +88,55 @@ function generateBasicDescription(data, properties) {
   const addOrLost = highestNetChange.periodNetChange > 0 ? "added" : "lost";
 
   // change is always positive (in text)
-  const change = Math.abs(highestNetChange.periodNetChange);
+  const netChange = Math.abs(highestNetChange.periodNetChange);
+  const pctChange = Math.abs(highestPctChange.periodPctChange);
+
   let growthStatement = "";
   if (highestPctChange.periodPctChange > 0) {
     growthStatement = `Industry ${highestPctChange.label} is the fastest growing,\
       and it has grown \
-      ${highestPctChange.periodPctChange}% \
+      ${pctChange}% \
       from ${highestPctChange.periodStart} to ${highestPctChange.periodEnd}`;
   } else if (highestPctChange.periodPctChange < 0) {
     growthStatement = `Industry ${highestPctChange.label} is the fastest declining,\
       and it has declined \
-      ${highestPctChange.periodPctChange}% \
+      ${pctChange}% \
       from ${highestPctChange.periodStart} to ${highestPctChange.periodEnd}`;
   }
 
-  const template = `${highestNetChange.label} has ${addOrLost} ${change} \
+  const template = `${highestNetChange.label} has ${addOrLost} ${netChange} \
   ${properties.variable} between ${highestNetChange.periodStart} and \
   ${highestNetChange.periodEnd}. ${highestFinalVal.label} has the highest value \
   in ${highestFinalVal.periodEnd}, at ${highestFinalVal.finalVal} ${properties.variable}. \
-  ${growthStatement}`;
+  ${growthStatement}. `;
 
   return template;
 }
 
+function generatePeakDescription(data, properties) {
+  var peakStatement = "";
+
+  var topPeak = { x: 0, y: 0 }; // We will only describe the highest peak
+  var topDatum = null;
+
+  for (const datum of data) {
+    const seriesPeak = findSeriesPeak(datum.series);
+    if (seriesPeak && seriesPeak.y > topPeak.y) {
+      topPeak = seriesPeak;
+      topDatum = datum;
+    }
+  }
+
+  if (topDatum != null && topPeak.x !== 0) {
+    peakStatement = `${topDatum.label} has reached a peak in ${properties.variable} at \
+    ${topPeak.x}, at a value of ${topPeak.y}. `;
+  }
+
+  return peakStatement;
+}
+
 export function createSingleRegionMultipleBusinessesLine(data, properties) {
-  return generateBasicDescription(data, properties);
+  const basicDesc = generateBasicDescription(data, properties);
+  const peakDesc = generatePeakDescription(data, properties);
+  return basicDesc + peakDesc;
 }
