@@ -61,10 +61,10 @@ function _findCrossPoint(s1, s2) {
 }
 
 function _findSingularCrossPoint(s1, s2) {
-  const { crossPoint } = _findCrossPoint(s1, s2);
+  const crossPoint = _findCrossPoint(s1, s2);
   if (crossPoint) {
     for (const i in s2) {
-      if (s2[i].x > crossPoint.crossYear && s2[i].y < crossPoint.crossValue) {
+      if (s2[i].x > crossPoint.crossYear && s2[i].y > crossPoint.crossValue) {
         return null;
       }
     }
@@ -81,9 +81,10 @@ function findUsurper(data) {
   for (const datum of data) {
     const processedSeries = processSeries(datum.series);
     // Loop through every other datum
-    for (const otherDatum of data.map((i) => i.index !== datum.index)) {
+    for (const otherDatum of data) {
       const otherProcessedSeries = processSeries(otherDatum.series);
       if (
+        datum.index !== otherDatum.index &&
         processedSeries.firstDatum.y < otherProcessedSeries.firstDatum.y &&
         processedSeries.finalVal > otherProcessedSeries.finalVal
       ) {
@@ -97,6 +98,8 @@ function findUsurper(data) {
       }
     }
   }
+
+  return usurpers;
 }
 
 function findTrendBreaker(data) {
@@ -224,13 +227,16 @@ function generateTrendBreakingDescription(data, properties) {
     return `Of the industries shown during your selected period, \
     only ${trendBreaker.datum.label}'s ${properties.variable} has declined overall, \
     by ${trendBreaker.change}%. `;
+  } else {
+    return "";
   }
 }
 
 function generateUsurperDescription(data, properties) {
   let usurpers = findUsurper(data);
+  console.log(usurpers);
   let usurpersStatement = "";
-  if (usurpers) {
+  if (usurpers.length !== 0) {
     for (const u of usurpers) {
       usurpersStatement += `Industry ${u.u1.label} has surpassed ${u.u2.label} in \
       ${properties.variable} in ${u.xp.crossYear}. `;
@@ -244,6 +250,6 @@ export function createSingleRegionMultipleBusinessesLine(data, properties) {
   const basicDesc = generateBasicDescription(dataCopy, properties);
   const peakDesc = generatePeakDescription(dataCopy, properties);
   const trendbreakDesc = generateTrendBreakingDescription(dataCopy, properties);
-  // const usurpersStatement = generateUsurperDescription(data, properties);
-  return basicDesc + peakDesc + trendbreakDesc;
+  const usurpersStatement = generateUsurperDescription(data, properties);
+  return basicDesc + peakDesc + trendbreakDesc + usurpersStatement;
 }

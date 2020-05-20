@@ -61,6 +61,12 @@ function App() {
             mentioned as such.
           </li>
         </ol>
+        Demo for Linechart with an usurper.
+        <Linechart
+          data={usurper}
+          chartType="single region multiple businesses line"
+          chartProperties={{ variable: "establishments" }}
+        />
         Demo for Linechart with a trend breaker.
         <Linechart
           data={trendBreaker}
