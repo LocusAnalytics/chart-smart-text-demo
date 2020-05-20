@@ -40,7 +40,7 @@ class Linechart extends React.Component {
 
   render() {
     const dim = { h: 200, w: 450, legend_w: 80, legend_h: 50 };
-    const chartPalette = ["orange", "orange", "red", "teal", "turquoise"];
+    const chartPalette = ["orange", "purple", "red", "teal", "turquoise"];
     const legends = this.state.data.map((datum) => {
       return { name: datum.label, symbol: { fill: chartPalette[datum.index] } };
     });
