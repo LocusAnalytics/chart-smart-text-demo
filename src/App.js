@@ -60,6 +60,11 @@ function App() {
             declined or grown during period, that "trend breaker" will be
             mentioned as such.
           </li>
+          <li>
+            If there is an “usurper” industry that has grown to surpass another
+            industry, and never declined below the surpassed industry during
+            period, identify it.
+          </li>
         </ol>
         Demo for Linechart with an usurper.
         <Linechart
