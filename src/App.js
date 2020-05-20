@@ -38,6 +38,12 @@ function App() {
           chartType="single region multiple businesses line"
           chartProperties={{ variable: "establishments" }}
         />
+        Demo for Linechart with a trend breaker.
+        <Linechart
+          data={linechartDataPeak}
+          chartType="single region multiple businesses line"
+          chartProperties={{ variable: "establishments" }}
+        />
         Demo for simple description of single region multiple businesses:
         <Barchart
           data={barchartData1}

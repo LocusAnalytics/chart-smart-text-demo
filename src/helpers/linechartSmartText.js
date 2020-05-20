@@ -85,6 +85,11 @@ function generateBasicDescription(data, properties) {
       and it has grown \
       ${highestPctChange.periodPctChange}% \
       from ${highestPctChange.periodStart} to ${highestPctChange.periodEnd}`;
+  } else if (highestPctChange.periodPctChange < 0) {
+    growthStatement = `Industry ${highestPctChange.label} is the fastest declining,\
+      and it has declined \
+      ${highestPctChange.periodPctChange}% \
+      from ${highestPctChange.periodStart} to ${highestPctChange.periodEnd}`;
   }
 
   const template = `${highestNetChange.label} has ${addOrLost} ${change} \
