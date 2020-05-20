@@ -64,7 +64,7 @@ function _findSingularCrossPoint(s1, s2) {
   const crossPoint = _findCrossPoint(s1, s2);
   if (crossPoint) {
     for (const i in s2) {
-      if (s2[i].x > crossPoint.crossYear && s2[i].y > crossPoint.crossValue) {
+      if (s2[i].x > crossPoint.crossYear && s2[i].y > s1[i].y) {
         return null;
       }
     }
@@ -92,6 +92,7 @@ function findUsurper(data) {
           datum.series,
           otherDatum.series
         );
+
         if (crossPoint) {
           usurpers.push({ u1: datum, xp: crossPoint, u2: otherDatum });
         }
@@ -234,7 +235,6 @@ function generateTrendBreakingDescription(data, properties) {
 
 function generateUsurperDescription(data, properties) {
   let usurpers = findUsurper(data);
-  console.log(usurpers);
   let usurpersStatement = "";
   if (usurpers.length !== 0) {
     for (const u of usurpers) {
@@ -242,6 +242,7 @@ function generateUsurperDescription(data, properties) {
       ${properties.variable} in ${u.xp.crossYear}. `;
     }
   }
+
   return usurpersStatement;
 }
 
