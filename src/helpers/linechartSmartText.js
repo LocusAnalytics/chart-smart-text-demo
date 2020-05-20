@@ -15,7 +15,7 @@ function findSeriesPeak(series) {
     return prev.y > curr.y ? prev : curr;
   });
 
-  if (seriesMax.x !== periodStart && seriesMax.y !== periodEnd) {
+  if (seriesMax.x !== periodStart && seriesMax.x !== periodEnd) {
     return seriesMax;
   } else {
     return null;
