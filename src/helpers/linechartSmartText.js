@@ -52,6 +52,53 @@ function processSeries(series) {
 // THESE FUNCTIONS PROCESS LINE CHART DATA, I.E.:
 // ARRAYS OF {LABEL: FM OR CTY NAME, SERIES: TIME SERIES}
 
+function _findCrossPoint(s1, s2) {
+  for (const i in s1) {
+    if (s1[i].y > s2[i].y) {
+      return { crossYear: s1[i].x, crossValue: s1[i].y };
+    }
+  }
+}
+
+function _findSingularCrossPoint(s1, s2) {
+  const { crossPoint } = _findCrossPoint(s1, s2);
+  if (crossPoint) {
+    for (const i in s2) {
+      if (s2[i].x > crossPoint.crossYear && s2[i].y < crossPoint.crossValue) {
+        return null;
+      }
+    }
+    return crossPoint;
+  }
+}
+
+function findUsurper(data) {
+  let usurpers = [];
+  // Criteria: x usurps y if
+  // x's final value is higher, and its initial value is lower than y's
+  // after the year k where x's value first surpass y's,
+  // there are no years k+1,..., k+n where x's value is lower than y's.
+  for (const datum of data) {
+    const processedSeries = processSeries(datum.series);
+    // Loop through every other datum
+    for (const otherDatum of data.map((i) => i.index !== datum.index)) {
+      const otherProcessedSeries = processSeries(otherDatum.series);
+      if (
+        processedSeries.firstDatum.y < otherProcessedSeries.firstDatum.y &&
+        processedSeries.finalVal > otherProcessedSeries.finalVal
+      ) {
+        const crossPoint = _findSingularCrossPoint(
+          datum.series,
+          otherDatum.series
+        );
+        if (crossPoint) {
+          usurpers.push({ u1: datum, xp: crossPoint, u2: otherDatum });
+        }
+      }
+    }
+  }
+}
+
 function findTrendBreaker(data) {
   /* If only one datum has overall increasing trend while all other
   data is decreasing, or vice versa, then:
@@ -171,13 +218,25 @@ function generateTrendBreakingDescription(data, properties) {
   const trendBreaker = findTrendBreaker(data);
   if (trendBreaker && trendBreaker.rise === true) {
     return `Of the industries shown during your selected period, \
-    only ${trendBreaker.datum.label} has grown overall, \
+    only ${trendBreaker.datum.label}'s ${properties.variable} has grown overall, \
     by ${trendBreaker.change}%. `;
   } else if (trendBreaker && trendBreaker.rise === false) {
     return `Of the industries shown during your selected period, \
-    only ${trendBreaker.datum.label} has declined overall, \
+    only ${trendBreaker.datum.label}'s ${properties.variable} has declined overall, \
     by ${trendBreaker.change}%. `;
   }
+}
+
+function generateUsurperDescription(data, properties) {
+  let usurpers = findUsurper(data);
+  let usurpersStatement = "";
+  if (usurpers) {
+    for (const u of usurpers) {
+      usurpersStatement += `Industry ${u.u1.label} has surpassed ${u.u2.label} in \
+      ${properties.variable} in ${u.xp.crossYear}. `;
+    }
+  }
+  return usurpersStatement;
 }
 
 export function createSingleRegionMultipleBusinessesLine(data, properties) {
@@ -185,5 +244,6 @@ export function createSingleRegionMultipleBusinessesLine(data, properties) {
   const basicDesc = generateBasicDescription(dataCopy, properties);
   const peakDesc = generatePeakDescription(dataCopy, properties);
   const trendbreakDesc = generateTrendBreakingDescription(dataCopy, properties);
+  // const usurpersStatement = generateUsurperDescription(data, properties);
   return basicDesc + peakDesc + trendbreakDesc;
 }

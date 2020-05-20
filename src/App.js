@@ -6,7 +6,11 @@ import {
   generateBarchartData,
   generateLinechartData,
 } from "./helpers/generateData";
-import { seriesWithPeak, trendBreaker } from "./exampleData/exampleData";
+import {
+  seriesWithPeak,
+  trendBreaker,
+  usurper,
+} from "./exampleData/exampleData";
 
 function App() {
   const barchartData1 = generateBarchartData(4, "fms");
@@ -32,6 +36,31 @@ function App() {
           much.
         </div>
         <br />
+        For time series, there are a lot more things to describe. Currently:
+        <ol>
+          <li>
+            The industry with largest net change between start and end will get
+            a description of how much they gained or lost.{" "}
+          </li>
+          <li>
+            The industry with highest final value will get their final value
+            stated.
+          </li>
+          <li>
+            The industry with highest percent growth (if any) will get their pct
+            growth stated.
+          </li>
+          <li>
+            If there are industries that have a peak that is not at the start or
+            end of period, this peak will be noted for the industry with highest
+            peak value.
+          </li>
+          <li>
+            If there is a “trend breaker” industry that is the only to have
+            declined or grown during period, that "trend breaker" will be
+            mentioned as such.
+          </li>
+        </ol>
         Demo for Linechart with a trend breaker.
         <Linechart
           data={trendBreaker}
@@ -43,6 +72,12 @@ function App() {
           data={linechartDataPeak}
           chartType="single region multiple businesses line"
           chartProperties={{ variable: "establishments" }}
+        />
+        General demo for Linechart.
+        <Linechart
+          data={linechartData1}
+          chartType="single region multiple businesses line"
+          chartProperties={{ variable: "jobs" }}
         />
         Demo for simple description of single region multiple businesses:
         <Barchart
@@ -73,16 +108,6 @@ function App() {
             variable: "Employment",
           }}
           chartType="single business multiple regions"
-        />
-        For time series, there are a lot more things to describe. For now, the
-        industry with largest net change between start and end will get a
-        description of how much they gained or lost. The industry with highest
-        final value will get their final value stated. The industry with highest
-        percent growth (if any) will get their pct growth stated.
-        <Linechart
-          data={linechartData1}
-          chartType="single region multiple businesses line"
-          chartProperties={{ variable: "jobs" }}
         />
       </div>
     </div>

@@ -79,3 +79,54 @@ export const trendBreaker = [
     ],
   },
 ];
+
+export const usurper = [
+  {
+    index: 0,
+    label: "Laundry and Clothing Rental",
+    series: [
+      { x: 2006, y: 8 },
+      { x: 2007, y: 6 },
+      { x: 2008, y: 5 },
+      { x: 2009, y: 3 },
+      { x: 2010, y: 4 },
+      { x: 2011, y: 5 },
+      { x: 2012, y: 6 },
+      { x: 2013, y: 5 },
+      { x: 2014, y: 2 },
+      { x: 2015, y: 3 },
+    ],
+  },
+  {
+    index: 1,
+    label: "Protective Service Workers",
+    series: [
+      { x: 2006, y: 7 },
+      { x: 2007, y: 4 },
+      { x: 2008, y: 5 },
+      { x: 2009, y: 6 },
+      { x: 2010, y: 5 },
+      { x: 2011, y: 3 },
+      { x: 2012, y: 6 },
+      { x: 2013, y: 5 },
+      { x: 2014, y: 3 },
+      { x: 2015, y: 2 },
+    ],
+  },
+  {
+    index: 2,
+    label: "Engineering",
+    series: [
+      { x: 2006, y: 2 },
+      { x: 2007, y: 2 },
+      { x: 2008, y: 3 },
+      { x: 2009, y: 5 },
+      { x: 2010, y: 5 },
+      { x: 2011, y: 8 },
+      { x: 2012, y: 7 },
+      { x: 2013, y: 7 },
+      { x: 2014, y: 6 },
+      { x: 2015, y: 9 },
+    ],
+  },
+];
