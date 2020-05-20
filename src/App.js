@@ -6,7 +6,7 @@ import {
   generateBarchartData,
   generateLinechartData,
 } from "./helpers/generateData";
-import { seriesWithPeak } from "./exampleData/exampleData";
+import { seriesWithPeak, trendBreaker } from "./exampleData/exampleData";
 
 function App() {
   const barchartData1 = generateBarchartData(4, "fms");
@@ -32,13 +32,13 @@ function App() {
           much.
         </div>
         <br />
-        Demo for Linechart with a peak.
+        Demo for Linechart with a trend breaker.
         <Linechart
-          data={linechartDataPeak}
+          data={trendBreaker}
           chartType="single region multiple businesses line"
           chartProperties={{ variable: "establishments" }}
         />
-        Demo for Linechart with a trend breaker.
+        Demo for Linechart with a peak.
         <Linechart
           data={linechartDataPeak}
           chartType="single region multiple businesses line"
