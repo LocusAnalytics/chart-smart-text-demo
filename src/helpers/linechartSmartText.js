@@ -52,11 +52,43 @@ function processSeries(series) {
 // THESE FUNCTIONS PROCESS LINE CHART DATA, I.E.:
 // ARRAYS OF {LABEL: FM OR CTY NAME, SERIES: TIME SERIES}
 
+function findTrendBreaker(data) {
+  /* If only one datum has overall increasing trend while all other
+  data is decreasing, or vice versa, then:
+  Return an object containing that trend-breaking data, as well as
+  other information to generate the trend breaker text */
+  let riseCount = 0;
+  let riser = null;
+  let riseChange = 0;
+
+  let declineCount = 0;
+  let decliner = null;
+  let declineChange = 0;
+
+  for (const datum of data) {
+    const { periodNetChange, periodPctChange } = processSeries(datum.series);
+    if (periodNetChange > 0) {
+      riseCount++;
+      riser = datum;
+      riseChange = periodPctChange;
+    } else if (periodNetChange < 0) {
+      declineCount++;
+      decliner = datum;
+      declineChange = periodPctChange;
+    }
+  }
+
+  if (riseCount === 1 && declineCount > 1) {
+    return { rise: true, datum: riser, change: riseChange };
+  } else if (declineCount === 1 && riseCount > 1) {
+    return { rise: false, datum: decliner, change: declineChange };
+  }
+}
+
 function processLineChartData(data) {
   /* Given data with many series, calculate a few things that
   are useful to generate the basic desc */
-  const dataCopy = [...data];
-  const fullData = dataCopy.map((datum) => {
+  const fullData = data.map((datum) => {
     return { ...datum, ...processSeries(datum.series) };
   });
   const highestNetChange = fullData.reduce((prev, curr) => {
@@ -114,10 +146,10 @@ function generateBasicDescription(data, properties) {
 }
 
 function generatePeakDescription(data, properties) {
-  var peakStatement = "";
+  let peakStatement = "";
 
-  var topPeak = { x: 0, y: 0 }; // We will only describe the highest peak
-  var topDatum = null;
+  let topPeak = { x: 0, y: 0 }; // We will only describe the highest peak
+  let topDatum = null;
 
   for (const datum of data) {
     const seriesPeak = findSeriesPeak(datum.series);
@@ -135,8 +167,23 @@ function generatePeakDescription(data, properties) {
   return peakStatement;
 }
 
+function generateTrendBreakingDescription(data, properties) {
+  const trendBreaker = findTrendBreaker(data);
+  if (trendBreaker && trendBreaker.rise === true) {
+    return `Of the industries shown during your selected period, \
+    only ${trendBreaker.datum.label} has grown overall, \
+    by ${trendBreaker.change}%. `;
+  } else if (trendBreaker && trendBreaker.rise === false) {
+    return `Of the industries shown during your selected period, \
+    only ${trendBreaker.datum.label} has declined overall, \
+    by ${trendBreaker.change}%. `;
+  }
+}
+
 export function createSingleRegionMultipleBusinessesLine(data, properties) {
-  const basicDesc = generateBasicDescription(data, properties);
-  const peakDesc = generatePeakDescription(data, properties);
-  return basicDesc + peakDesc;
+  const dataCopy = [...data]; // work on a copy of the data just to be sure
+  const basicDesc = generateBasicDescription(dataCopy, properties);
+  const peakDesc = generatePeakDescription(dataCopy, properties);
+  const trendbreakDesc = generateTrendBreakingDescription(dataCopy, properties);
+  return basicDesc + peakDesc + trendbreakDesc;
 }
