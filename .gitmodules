@@ -1,0 +1,3 @@
+[submodule "src/helpers/SmartText"]
+	path = src/helpers/SmartText
+	url = https://github.com/LocusAnalytics/chart-smart-text.git

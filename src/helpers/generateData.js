@@ -1,4 +1,4 @@
-import { roundToDecimal } from "./smartTextHelpers";
+import { roundToDecimal } from "./SmartText/smartTextHelpers";
 import { fms, counties } from "./params";
 
 export function getRandom(arr, n) {

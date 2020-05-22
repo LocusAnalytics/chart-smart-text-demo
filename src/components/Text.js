@@ -1,5 +1,5 @@
 import React from "react";
-import { createSmartText } from "../helpers/SmartText";
+import { createSmartText } from "../helpers/SmartText/SmartText";
 
 class Text extends React.Component {
   render() {
