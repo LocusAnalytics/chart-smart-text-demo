@@ -63,18 +63,16 @@ class Linechart extends React.Component {
               />
             );
           })}
-          {this.props.suppressLegend ? null : (
-            <VictoryLegend
-              x={dim.w - dim.legend_w}
-              y={5}
-              width={dim.legend_w}
-              height={dim.legend_h}
-              orientation="vertical"
-              rowGutter={2}
-              style={{ border: { stroke: null }, labels: { fontSize: 10 } }}
-              data={legends}
-            />
-          )}
+          <VictoryLegend
+            x={dim.w - dim.legend_w}
+            y={5}
+            width={dim.legend_w}
+            height={dim.legend_h}
+            orientation="vertical"
+            rowGutter={2}
+            style={{ border: { stroke: null }, labels: { fontSize: 10 } }}
+            data={legends}
+          />
         </VictoryChart>
         <LinechartForm
           data={this.state.data}

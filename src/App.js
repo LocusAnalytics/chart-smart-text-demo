@@ -22,8 +22,13 @@ function App() {
     { index: 2, label: "Engineering", series: seriesWithPeak },
   ];
 
-  // Generate 10 years' worth of random data
-  const occvsbizData = generateLinechartData(2, "fms", 10);
+  // Generate 10 years' worth of random data on 2 FMs
+  // then change the label field to "business" and "occupation"
+  const occvsbizData = generateLinechartData(2, "fms", 10).map(
+    (datum, index) => {
+      return { ...datum, label: index ? "business" : "occupation" };
+    }
+  );
 
   return (
     <div className="App">
@@ -32,7 +37,6 @@ function App() {
         Demo for Occupation vs. Business trend comparison
         <Linechart
           data={occvsbizData}
-          suppressLegend
           chartType="occupation vs business trend"
         />
         <h1>
