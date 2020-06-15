@@ -11,6 +11,10 @@ For linecharts (time series):
 
 [Live demo here](https://chart-smart-text-locus.netlify.app/)
 
+## TL;DR setup instructions
+You need to have Node.js installed.
+Clone this repo & run `npm i`, then start the dev server with `npm start`.
+
 ## SmartText development workflow
 You can add a chart to App.js with new data.
 If you need your data to look a certain way, define the data in `exampleData/exampleData.js`, exporting it as a constant which App.js can import. Otherwise, make use of `generateLinechartData` or `generateBarcharData` functions.
