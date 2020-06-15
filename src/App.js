@@ -30,7 +30,11 @@ function App() {
       <header className="App-header">Smart Text Prototype Demo</header>
       <div className="App-body">
         Demo for Occupation vs. Business trend comparison
-        <Linechart data={occvsbizData} suppressLegend />
+        <Linechart
+          data={occvsbizData}
+          suppressLegend
+          chartType="occupation vs business trend"
+        />
         <h1>
           For now, please mentally adjust the units to appropriate numbers (e.g.
           business count is in thousands, annual payroll is in $1,000, and so
