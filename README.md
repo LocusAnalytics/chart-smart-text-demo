@@ -11,6 +11,12 @@ For linecharts (time series):
 
 [Live demo here](https://chart-smart-text-locus.netlify.app/)
 
+## SmartText development workflow
+You can add a chart to App.js with new data.
+If you need your data to look a certain way, define the data in `exampleData/exampleData.js`, exporting it as a constant which App.js can import. Otherwise, make use of `generateLinechartData` or `generateBarcharData` functions.
+
+ `<Linechart/>` or `<Barchart/>` components come with data manipulation and a SmartText field included. `src/components/Text.js` is the component that calls on SmartText module to get back the SmartText. A `chartType` props is expected. Most of the time a `chartProperties` props is required for SmartText to work properly.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
