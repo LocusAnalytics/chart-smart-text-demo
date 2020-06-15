@@ -22,10 +22,15 @@ function App() {
     { index: 2, label: "Engineering", series: seriesWithPeak },
   ];
 
+  // Generate 10 years' worth of random data
+  const occvsbizData = generateLinechartData(2, "fms", 10);
+
   return (
     <div className="App">
       <header className="App-header">Smart Text Prototype Demo</header>
       <div className="App-body">
+        Demo for Occupation vs. Business trend comparison
+        <Linechart data={occvsbizData} suppressLegend />
         <h1>
           For now, please mentally adjust the units to appropriate numbers (e.g.
           business count is in thousands, annual payroll is in $1,000, and so
